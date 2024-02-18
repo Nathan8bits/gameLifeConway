@@ -1,5 +1,5 @@
-let tamY = 20;
-let tamX = 40; //linhas, colunas  10, 6 
+let tamY = 100;
+let tamX = 100; //linhas, colunas  10, 6 
 let matriz = new Array(tamX);//colunas
 let todosMorreram = false;
 let individuos = 0;
