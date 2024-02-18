@@ -153,9 +153,15 @@ function proximoFrame(mapa) {
         for(let y = 0; y < tamY; y++) {
             ponto[1] = y;
 
+            if( mapa[x][y] == ' '
+                && verificarVizinhos(ponto, mapa) == 3) {
+                    mapaProx[x][y] = '#';
+                    celulaTd[x*tamY + y].setAttribute("class", "vida");
+            }
             //verificação de condição para continuar vivo
-            if(verificarVizinhos(ponto, mapa) == 2 
-                || verificarVizinhos(ponto, mapa) == 3) {
+            else if(mapa[x][y] == '#'
+                    && verificarVizinhos(ponto, mapa) == 2 
+                    || verificarVizinhos(ponto, mapa) == 3) {
                 mapaProx[x][y] = '#'; //continua vivo
                 celulaTd[x*tamY + y].setAttribute("class", "vida");
             }
