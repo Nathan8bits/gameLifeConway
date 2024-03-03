@@ -37,6 +37,8 @@ btnClear.addEventListener("click", () => {
     proximoFrame(matriz);
 })
 
+//const mapa = new Mapa();
+//mapa.criarTabuleiro(tamX, tamY);
 criarTabuleiro();
 let celulaTd = document.querySelectorAll(".celulaTd");
 
@@ -104,7 +106,7 @@ setInterval(function(){
         //console.log(matriz)
         print(matriz);
     }
-}, 500)
+}, 500);
 
 
 function print(mapa) {
