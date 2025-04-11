@@ -1,3 +1,5 @@
+import { criarTabuleiro } from "./mapa.js";
+
 let tamY = 100;
 let tamX = 100; //linhas, colunas  10, 6 
 let matriz = new Array(tamX);//colunas
@@ -39,7 +41,7 @@ btnClear.addEventListener("click", () => {
 
 //const mapa = new Mapa();
 //mapa.criarTabuleiro(tamX, tamY);
-criarTabuleiro();
+criarTabuleiro(mapa, tamX, tamY);
 let celulaTd = document.querySelectorAll(".celulaTd");
 
 function iniciarCelulas () {
@@ -220,3 +222,28 @@ function posicinarCelulasAleatorias(mapa, quantidade) {
         console.log('A quantidade inicial de individuos é maior que o máximo suportado pelo mapa!')
     }
 }
+
+/*
+function criarTabuleiro() {
+    //const componentRoot = document.createElement("div");
+	//componentRoot.setAttribute("class", "mapa");
+
+	const matrizMapa = document.createElement("tab");
+	matrizMapa.setAttribute("class", "matrizMapa");
+    
+    for(let y = 0; y < tamX; y++) {
+        const linha = document.createElement("tr");
+
+        for(let x = 0; x < tamY; x++) {
+            const celula = document.createElement("td");
+            celula.setAttribute("class", "celulaTd")
+            //celula.innerHTML = `${x}, ${y}`
+            linha.appendChild(celula)
+        }
+
+        matrizMapa.appendChild(linha);
+    }
+
+    mapa.appendChild(matrizMapa);
+}
+    */
