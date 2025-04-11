@@ -1,5 +1,5 @@
 //cria tabuleiro
-function criarTabuleiro() {
+function criarTabuleiro(tamX, tamY) {
     //const componentRoot = document.createElement("div");
 	//componentRoot.setAttribute("class", "mapa");
 

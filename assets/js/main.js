@@ -100,9 +100,9 @@ function iniciarCelulas () {
 })();
 
 setInterval(function(){
-    if(verificarVida(matriz) && run) {
+    if(contarVida(matriz) && run) {
         matriz = proximoFrame(matriz);
-        console.log('tem vida?'+ verificarVida(matriz) + '\nindividuos: ' + individuos + '\n(main)matriz: ');
+        console.log('tem vida?'+ contarVida(matriz) + '\nindividuos: ' + individuos + '\n(main)matriz: ');
         //console.log(matriz)
         print(matriz);
     }
@@ -120,7 +120,7 @@ function print(mapa) {
     }
 }
 
-function verificarVida(mapa) {
+function contarVida(mapa) {
     let valor = false;
     let qntdd = 0
 
@@ -140,6 +140,7 @@ function verificarVida(mapa) {
 function proximoFrame(mapa) {
     let mapaProx = new Array(tamX);
 
+    // cria uma outra matriz
     for(let i = 0; i < tamX; i++) {
         mapaProx[i] = new Array(tamY)
         
@@ -149,21 +150,21 @@ function proximoFrame(mapa) {
     }
 
     for (let x = 0; x < tamX; x++) {
-        let ponto = [2];
+        let ponto = [2]; //{x, y}
         ponto[0] = x;
 
         for(let y = 0; y < tamY; y++) {
             ponto[1] = y;
 
-            if( mapa[x][y] == ' '
-                && verificarVizinhos(ponto, mapa) == 3) {
+            if( mapa[x][y] == ' ' 
+                && contarVizinhos(ponto, mapa) == 3) {
                     mapaProx[x][y] = '#';
                     celulaTd[x*tamY + y].setAttribute("class", "vida");
             }
             //verificação de condição para continuar vivo
             else if(mapa[x][y] == '#'
-                    && verificarVizinhos(ponto, mapa) == 2 
-                    || verificarVizinhos(ponto, mapa) == 3) {
+                    && contarVizinhos(ponto, mapa) == 2 
+                    || contarVizinhos(ponto, mapa) == 3) {
                 mapaProx[x][y] = '#'; //continua vivo
                 celulaTd[x*tamY + y].setAttribute("class", "vida");
             }
@@ -177,17 +178,18 @@ function proximoFrame(mapa) {
     return mapaProx;
 }
 
-function verificarVizinhos(ponto, mapa) {
+function contarVizinhos(ponto, mapa) {
     let pontoV = [2]; //y, x
     let vizinhos = 0;
 
     for (let i = 0; i < 9; i++) {
         if(i != 4) {
-            let x = parseInt(i/3);
-            let y = i%3;
-            pontoV[0] = (y - 1) + ponto[0];
-            pontoV[1] = (x - 1) + ponto[1];
+            let x = parseInt(i/3) - 1;
+            let y = i%3 - 1;
+            pontoV[0] = y + ponto[0];
+            pontoV[1] = x + ponto[1];
             
+            //TODO: funcao "ponto está contido no mapa?"
             if( pontoV[0] >= 0
                 && pontoV[1] >= 0
                 && pontoV[0] < tamX
@@ -204,7 +206,7 @@ function verificarVizinhos(ponto, mapa) {
 function posicinarCelulasAleatorias(mapa, quantidade) {
     if(quantidade <= tamX*tamY) {
         //posicionando 4 celulas de forma aleatoria sem repetição
-        for (let index = 0; index < quantidade; index++) {
+        for (let i = 0; i < quantidade; i++) {
             let Yp = Math.floor(Math.random() * (tamY));
             let Xp = Math.floor(Math.random() * (tamX));
     
@@ -213,7 +215,7 @@ function posicinarCelulasAleatorias(mapa, quantidade) {
                 celulaTd[Xp*tamY + Yp].setAttribute("class", "vida");
             }
             else if (index > 0) {
-                index--;
+                i--;
             }
         }
     } else {
