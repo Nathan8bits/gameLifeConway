@@ -1,3 +1,5 @@
+import { criarTabuleiro } from "./mapa.js";
+
 let tamY = 100;
 let tamX = 100; //linhas, colunas  10, 6 
 let matriz = new Array(tamX);//colunas
@@ -39,7 +41,7 @@ btnClear.addEventListener("click", () => {
 
 //const mapa = new Mapa();
 //mapa.criarTabuleiro(tamX, tamY);
-criarTabuleiro();
+criarTabuleiro(mapa, tamX, tamY);
 let celulaTd = document.querySelectorAll(".celulaTd");
 
 function iniciarCelulas () {
@@ -219,6 +221,6 @@ function posicinarCelulasAleatorias(mapa, quantidade) {
             }
         }
     } else {
-        console.log('A quantidade inicial de individuos é maior que o máximo suportado pelo mapa!')
+        console.log('A quantidade inicial de individuos é maior que o máximo suportado pelo mapa! ')
     }
 }

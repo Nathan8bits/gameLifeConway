@@ -1,9 +1,9 @@
 //cria tabuleiro
-function criarTabuleiro(tamX, tamY) {
+export function criarTabuleiro(mapa, tamX, tamY) {
     //const componentRoot = document.createElement("div");
 	//componentRoot.setAttribute("class", "mapa");
 
-	const matrizMapa = document.createElement("tab");
+	const matrizMapa = document.createElement("table");
 	matrizMapa.setAttribute("class", "matrizMapa");
     
     for(let y = 0; y < tamX; y++) {
