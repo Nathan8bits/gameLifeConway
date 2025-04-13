@@ -1,4 +1,4 @@
-import { Mapa } from "./mapa2.js";
+import { Mapa } from "./mapa.js";
 
 const mapaHtml = document.querySelector(".mapa");
 
