@@ -1,18 +1,20 @@
 import { Mapa } from "./mapa2.js";
 
-let tamY = 6;
-let tamX = 3;
-let individuosInicio = 8; //primeira geração
+const mapaHtml = document.querySelector(".mapa");
 
-//variaveis de controle
-let run = false;//rodando
+let tamY = 30;
+let tamX = 30;
 
-//variavies do html
-const mapa = document.querySelector(".mapa");
+let mapaObj = new Mapa(mapaHtml, tamX, tamY);
 
-let map = new Mapa(mapa, tamX, tamY);
-//map.criarTabuleiro();
-let celulaTd = document.querySelectorAll(".celulaTd");
-//map.celulaTd = celulaTd;
+setInterval(function(){
+    if(mapaObj.contarVida() > 0 && mapaObj.run) {
+        mapaObj.proximoFrameJs();
 
-//console.log(map.celulaTd)
+        console.log(mapaObj.run);
+    } else if(mapaObj.contarVida() <= 0){
+        mapaObj.pause();
+        mapaObj.run = false;
+    }
+
+}, 200);

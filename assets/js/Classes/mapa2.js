@@ -1,13 +1,15 @@
 export class Mapa {
     mapaHtml
+    celulaTd
+    botoes
+    
     mapaJs
     tamX
     tamY
-    celulaTd
     qntddInicial
     vivos = 0
 
-    run = false
+    run = true
 
     constructor(mapa, tamX, tamY) {
         this.mapaHtml = mapa;
@@ -15,69 +17,163 @@ export class Mapa {
         this.tamY = tamY;
         this.qntddInicial = 5
         
-        
+        this.criarBotoes();
         this.criarTabuleiro();
         this.posicinarCelulasAleatorias();
-        this.print();
-        this.proximoFrame();
+        //this.print();
+        //this.proximoFrameJs();
     }
 
-    
-proximoFrame() {
-    let mapaProx = new Array(this.tamX);
 
-    // cria uma outra matriz
-    for(let i = 0; i < this.tamX; i++) {
-        mapaProx[i] = new Array(this.tamY)
-        
-        for(let j = 0; j < this.tamY; j++) {
-            mapaProx[i][j] = ' ';//preenchendo o mapaProx
-        }
-    }
+    mudarMapaHtml(mapaJs) {
+        for(let x=0; x < this.tamX; x++) {
+            for(let y=0; y <this.tamY; y++ ) {
 
-    for (let x = 0; x <this.tamX; x++) {
-        let ponto = [2]; //{x, y}
-        ponto[0] = x;
-
-        for(let y = 0; y < this.tamY; y++) {
-            ponto[1] = y;
-
-            if( this.mapaJs[x][y] == ' ' 
-                && this.contarVizinhos(ponto, this.mapaJs) == 3) {
-                    mapaProx[x][y] = '#';
+                if (mapaJs[x][y] == '#') {
                     this.celulaTd[x*this.tamY + y].classList.add("vida");
-            }
-            //verificação de condição para continuar vivo
-            else if(this.mapaJs[x][y] == '#'
-                    && this.contarVizinhos(ponto, this.mapaJs) == 2 
-                    || this.contarVizinhos(ponto, this.mapaJs) == 3) {
-                mapaProx[x][y] = '#'; //continua vivo
-                this.celulaTd[x*this.tamY + y].setAttribute("class", "vida");
-            }
-            else {
-                mapaProx[x][y] = ' '; //morre
-                this.celulaTd[x*this.tamY + y].classList.remove("vida");
+                } else if (mapaJs[x][y] == ' ') {
+                    this.celulaTd[x*this.tamY + y].classList.remove("vida");
+                }
+
             }
         }
     }
-    
-    console.log(mapaProx)
-    //return mapaProx;
-}
 
+    proximoFrameJs(mapaLimpo) {
+       // console.log("proximoFrameJs", mapaLimpo)
+
+        if(mapaLimpo != undefined) {
+            this.mapaJs = mapaLimpo;
+            this.mudarMapaHtml(mapaLimpo)
+
+        } else {
+            let mapaProx = new Array(this.tamX);
+        
+            // cria uma outra matriz
+            for(let i = 0; i < this.tamX; i++) {
+                mapaProx[i] = new Array(this.tamY)
+                
+                for(let j = 0; j < this.tamY; j++) {
+                    mapaProx[i][j] = ' ';//preenchendo o mapaProx
+                }
+            }
+        
+            for (let x = 0; x <this.tamX; x++) {
+                let ponto = [2]; //{x, y}
+                ponto[0] = x;
+        
+                for(let y = 0; y < this.tamY; y++) {
+                    ponto[1] = y;
+        
+                    if( this.mapaJs[x][y] == ' ' 
+                        && this.contarVizinhos(ponto, this.mapaJs) == 3) {
+                            mapaProx[x][y] = '#';
+                           // this.mudarMapaHtml(mapaProx);
+                    }
+                    //verificação de condição para continuar vivo
+                    else if(this.mapaJs[x][y] == '#'
+                            && this.contarVizinhos(ponto, this.mapaJs) == 2 
+                            || this.contarVizinhos(ponto, this.mapaJs) == 3) {
+                        mapaProx[x][y] = '#'; //continua vivo
+                      //  this.mudarMapaHtml(mapaProx);
+                    }
+                    else {
+                        mapaProx[x][y] = ' '; //morre
+                    }
+                }
+            }
+            
+            this.mapaJs = mapaProx;
+            this.mudarMapaHtml(mapaProx);
+           // console.log(mapaProx)
+            //return mapaProx;
+        }
+       // this.print()
+    }
     
+    criarBotoes() {
+        let  btnRun = document.createElement("button");
+        btnRun.classList.add("class", "run");
+        btnRun.innerHTML = "Run";
+
+        let  btnPause = document.createElement("button");
+        btnPause.classList.add("class", "pause");
+        btnPause.innerHTML = "Pause";
+
+        let  btnClear = document.createElement("button");
+        btnClear.classList.add("class", "clear");
+        btnClear.innerHTML = "Clear";
+
+        let  btnProximo = document.createElement("button");
+        //btnClear.classList.add("class", "clear");
+        btnProximo.innerHTML = "Proximo";
+
+        this.botoes = [btnRun, btnPause, btnClear, btnProximo];
+
+        this.mapaHtml.appendChild(btnRun);
+        this.mapaHtml.appendChild(btnPause);
+        this.mapaHtml.appendChild(btnClear);
+        this.mapaHtml.appendChild(btnProximo);
+
+        this.iniciarBotoes();
+    }
+    
+    iniciarBotoes() {
+        this.botoes[0].addEventListener("click", () => {
+            console.log("clicou run");
+            
+            this.run = true;
+            this.botoes[1].disabled = false;
+            this.botoes[0].disabled = true;
+
+        });
+
+        this.botoes[1].addEventListener("click", () => {
+            this.pause();
+        });
+
+        this.botoes[2].addEventListener("click", () => {
+            console.log('btnClear')
+            
+            this.run = false;
+            let matriz = new Array(this.tamX);
+            
+            for (let x = 0; x < this.tamX; x++) {
+                matriz[x] = new Array(this.tamY)
+                for(let y = 0; y < this.tamY; y++) {
+                    matriz[x][y] = " ";
+                }
+            }
+            this.proximoFrameJs(matriz);
+            this.pause();
+        })
+
+        this.botoes[3].addEventListener("click", () => {
+            console.log("clicou proximo")
+            this.proximoFrameJs();
+        })
+    }
+
+    pause() {
+        console.log("clicou Pause");
+        
+        this.run = false;
+        this.botoes[1].disabled = true;
+        this.botoes[0].disabled = false;
+    }
+
     criarTabuleiro() {
         this.iniciarMatriz();
         
-        const matrizMapa = document.createElement("table");
-        matrizMapa.setAttribute("class", "matrizMapa");
+        let matrizMapa = document.createElement("table");
+        matrizMapa.classList.add("class", "matrizMapa");
         
         for(let y = 0; y < this.tamX; y++) {
             const linha = document.createElement("tr");
     
             for(let x = 0; x < this.tamY; x++) {
                 const celula = document.createElement("td");
-                celula.setAttribute("class", "celulaTd")
+                celula.classList.add("class", "celulaTd")
                 //celula.innerHTML = `${x}, ${y}`
                 linha.appendChild(celula)
             }
@@ -194,6 +290,5 @@ proximoFrame() {
 
         return this.vivos;
     }
-    
+   
 }
-
