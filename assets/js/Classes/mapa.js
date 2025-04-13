@@ -155,7 +155,7 @@ export class Mapa {
     }
 
     pause() {
-        console.log("clicou Pause");
+       // console.log("clicou Pause");
         
         this.run = false;
         this.botoes[1].disabled = true;
@@ -224,36 +224,31 @@ export class Mapa {
                     console.log(`${i} = (${parseInt(i/this.tamY)}, ${i%this.tamY})`);
                     console.log(`run:${this.run}`)
                     console.log(`vivos: ${this.contarVida()}`)
-                    this.print(this.mapaJs);
+                    //this.print(this.mapaJs);
                 }
             })
         }
     }
 
     contarVizinhos(ponto) {
-        let pontoV = [2]; //y, x
         let vizinhos = 0;
-    
-        for (let i = 0; i < 9; i++) {
-            if(i != 4) {
-                let x = parseInt(i/3);
-                let y = i%3;
-                pontoV[0] = (y - 1) + ponto[0];
-                pontoV[1] = (x - 1) + ponto[1];
-                
-                //TODO: funcao para "ponto está contido no mapa?"
-                if( pontoV[0] >= 0
-                    && pontoV[1] >= 0
-                    && pontoV[0] < this.tamX
-                    && pontoV[1] < this.tamY
-                    && this.mapaJs[pontoV[0]][pontoV[1]] == '#') {
-                    vizinhos++;
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (dx !== 0 || dy !== 0) {
+                    let nx = ponto[0] + dx;
+                    let ny = ponto[1] + dy;
+                    if (nx >= 0 && ny >= 0 && nx < this.tamX && ny < this.tamY) {
+                        if (this.mapaJs[nx][ny] === '#') {
+                            vizinhos++;
+                        }
+                    }
                 }
             }
         }
-    
+        
         return vizinhos;
     }
+    
 
     posicinarCelulasAleatorias() {
         if(this.qntddInicial <= this.tamX*this.tamY) {
