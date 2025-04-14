@@ -1,34 +1,116 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: 'roboto', sans-serif;
-}
-
-button {
-    padding: 5px;
-    margin: 5px;
-    font-size: 25px;
-    border-radius: 10px;
-}
-
-table{
-    font-size: x-large;
-    border-collapse: collapse;
-}
-
-td{
-    border: 0.1px solid black;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  body {
+    background-color: #121212;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1rem;
+  }
+  
+  /* Estilizando a div .mapa */
+  .mapa {
+    touch-action: manipulation; /* desativa zoom com double tap */
+    -ms-touch-action: manipulation;
+    display: flex;
+    flex-direction: column;  /* Botões no topo e tabela abaixo */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
     padding: 10px;
-}
-
-.pause {
-    background-color: blue;
-}
-
-.run {
-    background-color: red;
-}
-
-.vida{
-    background-color: red;
-}
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+    transform-origin: center center; /* Centro do zoom */
+  }
+  
+  /* Container dos botões (flexbox para alinhar lado a lado) */
+  .button-container {
+    display: flex;
+    justify-content: space-around;  /* Alinha os botões com espaçamento entre eles */
+    gap: 20px;  /* Aumenta o espaçamento entre os botões */
+    width: 100%;
+  }
+  
+  /* Botões */
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #444;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Estilos para os botões de ação */
+  .pause {
+    background-color: #1976d2; /* Azul forte */
+  }
+  
+  .run {
+    background-color: #d32f2f; /* Vermelho escuro */
+  }
+  
+  .clear {
+    background-color: #388e3c; /* Verde escuro */
+  }
+  
+  /* Estilos para a tabela do jogo */
+  table {
+    font-size: large;
+    border-collapse: collapse;
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;  /* Habilita rolagem horizontal diretamente na tabela */
+    display: block;    /* Necessário para que o overflow-x funcione */
+    white-space: nowrap; /* Garante que as células não quebrem em múltiplas linhas */
+    transform: scale(1); /* Zoom padrão */
+    transition: transform 0.3s ease; /* Transição suave para o zoom */
+  }
+  
+  /* Células da tabela */
+  td {
+    border: 1px solid #444;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #222;
+  }
+  
+  /* Célula com "vida" */
+  .vida {
+    background-color: #f44336; /* Vermelho vibrante */
+  }
+  
+  /* Descrição da barra de rolagem para que fique discreta */
+  table::-webkit-scrollbar {
+    height: 8px; /* Largura da barra de rolagem horizontal */
+  }
+  
+  table::-webkit-scrollbar-thumb {
+    background-color: #888; /* Cor da parte rolável */
+    border-radius: 10px;
+  }
+  
+  table::-webkit-scrollbar-track {
+    background-color: transparent; /* Cor do fundo da barra */
+  }
+  

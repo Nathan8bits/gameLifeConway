@@ -2,6 +2,7 @@ export class Mapa {
     mapaHtml
     celulaTd
     botoes
+    zoomLevel = 1
     
     mapaJs
     tamX
@@ -136,17 +137,28 @@ export class Mapa {
         let  btnClear = document.createElement("button");
         btnClear.classList.add("class", "clear");
         btnClear.innerHTML = "Clear";
-
+        
         let  btnProximo = document.createElement("button");
-        //btnClear.classList.add("class", "clear");
         btnProximo.innerHTML = "Proximo";
+        
+        // Botões de zoom
+        let btnZoomIn = document.createElement("button");
+        btnZoomIn.innerHTML = "Zoom +";
+        btnZoomIn.classList.add("zoom");
+    
+        let btnZoomOut = document.createElement("button");
+        btnZoomOut.innerHTML = "Zoom -";
+        btnZoomOut.classList.add("zoom");
+        
+        this.botoes = [btnRun, btnPause, btnClear, btnProximo, btnZoomIn, btnZoomOut];
 
-        this.botoes = [btnRun, btnPause, btnClear, btnProximo];
+        let btnContainer = document.createElement("div")
+        btnContainer.classList.add("button-container")
 
-        this.mapaHtml.appendChild(btnRun);
-        this.mapaHtml.appendChild(btnPause);
-        this.mapaHtml.appendChild(btnClear);
-        this.mapaHtml.appendChild(btnProximo);
+
+        this.botoes.forEach(btn => btnContainer.appendChild(btn));
+
+        this.mapaHtml.appendChild(btnContainer);
 
         this.iniciarBotoes();
     }
@@ -185,7 +197,26 @@ export class Mapa {
             console.log("clicou proximo")
             this.proximoFrameJs();
         })
+
+        this.botoes[4].addEventListener("click", () => {
+            this.zoomLevel += 0.1;
+            this.atualizarZoom();
+        });
+        
+        this.botoes[5].addEventListener("click", () => {
+            this.zoomLevel = Math.max(0.8, this.zoomLevel - 0.1);
+            this.atualizarZoom();
+        });
+        
     }
+
+    atualizarZoom() {
+        const celulas = this.mapaHtml.querySelectorAll("td");
+        celulas.forEach(celula => {
+            celula.style.padding = `${10 * this.zoomLevel}px`;
+        });
+    }
+    
 
     pause() {
        // console.log("clicou Pause");
@@ -213,7 +244,9 @@ export class Mapa {
     
             matrizMapa.appendChild(linha);
         }
-    
+
+      
+
         this.mapaHtml.appendChild(matrizMapa);
         this.iniciarCelulas();
     }
