@@ -4,11 +4,6 @@
     font-family: 'roboto', sans-serif;
 }
 
-table {
-    font-size: x-large;
-    
-}
-
 button {
     padding: 5px;
     margin: 5px;
@@ -17,6 +12,7 @@ button {
 }
 
 table{
+    font-size: x-large;
     border-collapse: collapse;
 }
 
@@ -31,10 +27,6 @@ td{
 
 .run {
     background-color: red;
-}
-
-.fishing{
-    background-color: yellow;
 }
 
 .vida{

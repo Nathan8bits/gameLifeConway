@@ -22,7 +22,40 @@ export class Mapa {
         this.posicinarCelulasAleatorias();
         //this.print();
         //this.proximoFrameJs();
+
+        this.fluxo();
     }
+
+    async fluxo() {
+        await this.esperar(250);
+
+        if(this.contarVida() > 0 && this.run) {
+            this.proximoFrameJs();
+            //console.log(mapaObj.run);
+        } else if(this.contarVida() <= 0){
+            this.pause();
+            //mapaObj.run = false;
+        }
+        await this.esperar(250);
+        this.fluxo();
+      }
+
+    esperar(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      
+/*
+    async fluxo() {
+        setInterval(function(){
+        if(mapaObj.contarVida() > 0 && mapaObj.run) {
+            mapaObj.proximoFrameJs();
+            //console.log(mapaObj.run);
+        } else if(mapaObj.contarVida() <= 0){
+            mapaObj.pause();
+            //mapaObj.run = false;
+        }
+    
+    }, 200);*/
 
 
     mudarMapaHtml(mapaJs) {
