@@ -2,8 +2,7 @@
 
 Simulação interativa do clássico **Jogo da Vida de Conway**, implementado em **JavaScript modularizado**, com geração procedural de botões, zoom e controle de frames.
 
-Para ver clique aqui: [Jogo Da Vida ConWay](https://nathan8bits.github.io/gameLifeConway/
-)
+- Para ver clique aqui: [Jogo Da Vida ConWay](https://nathan8bits.github.io/gameLifeConway/)
 ---
 
 ## 📦 Estrutura Modular
